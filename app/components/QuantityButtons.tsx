@@ -1,9 +1,11 @@
 'use client'
 
-import {CartItem} from "../types";
-import {decreaseCartItem, increaseCartItem} from "@/app/cart/actions";
+
+
 import {useTransition} from "react";
+import {CartItem} from "@/app/types";
 import {useRouter} from "next/navigation";
+import {decreaseCartItem, increaseCartItem} from "@/app/cart/actions";
 
 export function QuantityButtons({ productId, qty }: CartItem) {
   const [isPending, startTransition] = useTransition();
