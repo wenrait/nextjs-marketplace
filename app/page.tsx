@@ -1,9 +1,13 @@
 import Link from "next/link";
-import {getProducts} from "@/app/admin/actions";
-import {ProductCard} from "@/app/components/ProductCard";
+import { getProducts } from "@/app/admin/actions";
+import { ProductCard } from "@/app/components/ProductCard";
+import { safeProduct } from "@/app/utils/utils";
 
 export default async function Home() {
-  const products = await getProducts()
+  const db = await getProducts();
+  const products = db.map((p) => (
+    safeProduct(p)
+  ));
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">

@@ -1,14 +1,13 @@
-'use server'
+'use server';
 import { cookies } from "next/headers";
-import { CartItem } from "@/app/types";
+import { CartCookieItem } from "@/app/types";
 import { readCartSafely } from "@/app/actions";
 
-export async function setCart(cartItems: CartItem[]) {
+export async function setCart(cartCookies: CartCookieItem[]) {
   const store = await cookies();
-  await store.set('cartItems' as any, JSON.stringify(cartItems) as any)
-  // await store.set('cartItems', JSON.stringify(cartItems))
+  await store.set('cartItems' as any, JSON.stringify(cartCookies) as any)
 }
-export async function getCart(): Promise<CartItem[]> {
+export async function getCart(): Promise<CartCookieItem[]> {
   const store = await cookies();
   const cart = (await store).get( 'cartItems' as any);
   return readCartSafely(cart?.value)

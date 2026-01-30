@@ -2,9 +2,10 @@
 
 import {createProduct} from "@/app/admin/actions";
 
-export default function ProductForm() {
+
+export default function ProductForm({ onClose }) {
   return (
-    <form action={createProduct} className="space-y-4">
+    <form action={createProduct} className="absolute bottom-1 right-1 space-y-4">
       <input
         name={'title'}
         placeholder={'Title'}
@@ -29,6 +30,7 @@ export default function ProductForm() {
         type={'text'}
       />
       <button type={"submit"}>Submit</button>
+      <button onClick={onClose}>Close</button>
     </form>
 
   )

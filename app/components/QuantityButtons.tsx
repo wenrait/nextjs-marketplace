@@ -1,7 +1,5 @@
 'use client'
 
-
-
 import {useTransition} from "react";
 import {CartItem} from "@/app/types";
 import {useRouter} from "next/navigation";

@@ -1,5 +1,6 @@
-'use client'
-import {Product} from "@/app/types";
+'use client';
+
+import { Product } from "@/app/types";
 
 type Props = {
   product: Product;

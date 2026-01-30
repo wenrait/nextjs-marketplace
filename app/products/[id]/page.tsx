@@ -1,6 +1,7 @@
 import {getCartItem} from "@/app/cart/actions";
-import {getProduct} from "@/app/admin/actions";
+import { getProduct } from "@/app/admin/actions";
 import {AddToCartButton} from "@/app/components/AddToCartButton";
+import { safeProduct } from "@/app/utils/utils";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -12,7 +13,8 @@ export default async function ProductPage({ params }: Props){
 
   if (!Number.isInteger(productId)) return <div>Некорректный id</div>
 
-  const product = await getProduct(productId);
+  const db = await getProduct(productId);
+  const product = safeProduct(db)
   const item = await getCartItem(productId);
 
   if (!product) return <div>404 Product not found</div>
@@ -21,7 +23,7 @@ export default async function ProductPage({ params }: Props){
   return (
     <main style={{ padding: 24 }}>
       <h1>{product.title}</h1>
-      <p>{product.description}</p>
+      <p>{product?.description}</p>
       <p>{product.price}</p>
       <AddToCartButton productId={product.id} qty={qty} />
     </main>

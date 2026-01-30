@@ -1,8 +1,12 @@
-import {getProducts} from "@/app/admin/actions";
-import {TableRow} from "@/app/admin/components/TableRow";
+import { getProducts } from "@/app/admin/actions";
+import { safeProduct } from "@/app/utils/utils";
+import { AdminClient } from "@/app/admin/AdminClient";
 
 export default async function AdminPage() {
-  const products = await getProducts();
+  const db = await getProducts();
+  const products = db.map((p) => (
+    safeProduct(p)
+  ));
   const tHeadData = {
     id: 'ID',
     title: 'Title',
@@ -13,24 +17,5 @@ export default async function AdminPage() {
     actions: 'Actions',
   }
 
-  return (
-    <main className={'p-[16px]'}>
-      <div className={'py-[16px] rounded-lg shadow-lg mt-[16px]'}>
-        <table>
-          <thead className={'text-center bg-[#282828]'}>
-          <TableRow row={tHeadData} />
-          </thead>
-          <tbody className={'bg-[#484848]'}>
-          { products ? (
-            products.map((p) => (
-              <TableRow row={p} key={p.id}/>
-            ))) : (
-            <p>DB is empty</p>
-          )
-          }
-          </tbody>
-        </table>
-      </div>
-    </main>
-  )
+  return <AdminClient products={products} tHeadData={tHeadData} />
 }
